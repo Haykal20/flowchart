@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tugas Diagram UML - Desain Modern</title>
+  
+  <!-- Menggunakan Tailwind CSS untuk styling modern -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Mengimpor Mermaid.js untuk render diagram -->
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+    // Inisialisasi mermaid dengan tema gelap agar sesuai dengan desain
+    mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+  </script>
+  
+  <style>
+    /* Menambahkan font Inter untuk tampilan yang lebih bersih */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    /* Kustomisasi untuk SVG diagram agar pas di dalam kartu */
+    .mermaid svg {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-gray-200">
+
+  <!-- Kontainer Utama -->
+  <div class="container mx-auto p-4 sm:p-8">
+
+    <!-- Header Informasi Mahasiswa -->
+    <header class="bg-gray-800 shadow-xl rounded-2xl p-6 mb-10 border border-gray-700">
+      <h3 class="text-xl font-semibold text-white">Nama: Haykal Furqan Shafiq</h3>
+      <h3 class="text-xl font-semibold text-gray-400">NIM: 24210076</h3>
+    </header>
+
+    <h1 class="text-4xl sm:text-5xl font-bold text-center mb-12 text-white tracking-tight">
+      Tugas Diagram UML
+    </h1>
+
+    <!-- Grid untuk menampung kartu-kartu diagram -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+      <!-- Kartu 1: Class Diagram -->
+      <div class="bg-gray-800 rounded-2xl shadow-xl p-6 transform hover:scale-105 transition-transform duration-300 border border-gray-700">
+        <h2 class="text-2xl font-semibold mb-4 text-cyan-400">1. Class Diagram</h2>
+        <p class="text-gray-400 mb-6">Sistem E-Commerce Sederhana</p>
+        <div class="mermaid bg-gray-900 p-4 rounded-lg">
+          classDiagram
+            class User {
+              +int userId
+              +string nama
+              +string email
+            }
+            class Produk {
+              +int produkId
+              +string nama
+              +float harga
+            }
+            class Keranjang {
+              +int keranjangId
+              +date tanggal
+            }
+            class ItemKeranjang {
+              +int produkId
+              +int jumlah
+            }
+            class Pesanan {
+              +int pesananId
+              +date tanggal
+              +string status
+            }
+
+            User "1" -- "*" Keranjang
+            Keranjang "1" -- "*" ItemKeranjang
+            Produk "1" -- "*" ItemKeranjang
+            User "1" -- "*" Pesanan
+        </div>
+      </div>
+
+      <!-- Kartu 2: Use Case Diagram (FIXED) -->
+      <div class="bg-gray-800 rounded-2xl shadow-xl p-6 transform hover:scale-105 transition-transform duration-300 border border-gray-700">
+        <h2 class="text-2xl font-semibold mb-4 text-cyan-400">2. Use Case Diagram</h2>
+        <p class="text-gray-400 mb-6">Fitur Aplikasi Mobile Banking</p>
+        <div class="mermaid bg-gray-900 p-4 rounded-lg">
+          flowchart LR
+            Nasabah[Nasabah] --> Login((Login))
+            Nasabah --> CekSaldo["Cek Saldo"]
+            Nasabah --> Transfer["Transfer Uang"]
+            Nasabah --> Bayar["Bayar Tagihan"]
+            Nasabah --> TopUp["Top Up E-Wallet"]
+            Admin[Admin Bank] --> KelolaNasabah["Kelola Nasabah"]
+            Admin --> KelolaTransaksi["Kelola Transaksi"]
+        </div>
+      </div>
+
+      <!-- Kartu 3: Sequence Diagram -->
+      <div class="bg-gray-800 rounded-2xl shadow-xl p-6 transform hover:scale-105 transition-transform duration-300 border border-gray-700">
+        <h2 class="text-2xl font-semibold mb-4 text-cyan-400">3. Sequence Diagram</h2>
+        <p class="text-gray-400 mb-6">Alur Proses Login Pengguna</p>
+        <div class="mermaid bg-gray-900 p-4 rounded-lg">
+          sequenceDiagram
+            participant U as User
+            participant A as Aplikasi
+            participant S as Server
+            participant DB as Database
+
+            U->>A: Input kredensial
+            A->>S: Kirim data login
+            S->>DB: Validasi data
+            DB-->>S: Hasil validasi
+            alt Login Berhasil
+              S-->>A: Kirim token akses
+              A-->>U: Tampilkan halaman utama
+            else Login Gagal
+              S-->>A: Kirim pesan error
+              A-->>U: Tampilkan notifikasi gagal
+            end
+        </div>
+      </div>
+      
+      <!-- Kartu 4: Activity Diagram -->
+      <div class="bg-gray-800 rounded-2xl shadow-xl p-6 transform hover:scale-105 transition-transform duration-300 border border-gray-700">
+        <h2 class="text-2xl font-semibold mb-4 text-cyan-400">4. Activity Diagram</h2>
+        <p class="text-gray-400 mb-6">Proses Checkout Belanja Online</p>
+        <div class="mermaid bg-gray-900 p-4 rounded-lg">
+          flowchart TD
+            Start([Start]) --> PilihProduk[Pilih Produk]
+            PilihProduk --> TambahKeranjang[Tambah ke Keranjang]
+            TambahKeranjang --> Checkout[Klik Checkout]
+            Checkout --> Alamat[Masukkan Alamat Pengiriman]
+            Alamat --> Pembayaran[Pilih Metode Pembayaran]
+            Pembayaran -->|Valid| Konfirmasi[Konfirmasi Pesanan]
+            Konfirmasi --> Selesai[Pesanan Berhasil] --> End([End])
+            Pembayaran -->|Tidak Valid| Error[Tampilkan Pesan Error] 
+            Error --> Pembayaran
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>
+
+
